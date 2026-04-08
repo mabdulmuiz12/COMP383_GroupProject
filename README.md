@@ -8,7 +8,7 @@ For more information about the Introduction, Dataset, and project workflow pleas
 
 
 ## Dependencies Used
-- conda
+- conda -> creates an environment for Metxcan and Predixcan to be ran on 
 - 
 ### In python 
 	- numpy 
@@ -20,4 +20,9 @@ To download ADHD GWAS summary statistics used to test pipeline:
 wget http://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90568001-GCST90569000/GCST90568441/GCST90568441.tsv.gz
 ```
 
+
+## Installing Metxcan 
+For more information/instructions on downloading Metaxcan, go to the Metaxcan Lab GitHub: https://github.com/hakyimlab/MetaXcan/blob/master/README.md 
+
+##
 
