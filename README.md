@@ -8,12 +8,23 @@ For more information about the Introduction, Dataset, and project workflow pleas
 
 
 ## Dependencies Used
+### Sodtwares
 - conda -> creates an environment for Metxcan and Predixcan to be ran on 
-- 
-### In python 
+- Linux or macOS
+- Python 
+- R 
+### Python Pakcages
 	- numpy 
 	- scipy
 	- pandas
+	
+### external tools 
+	- summary-gwas-imputation
+	- GWAS Catalog datasets
+
+### Description of scripts 
+	- S-Predixcan
+	- 
 
 ## Instructions 
 
@@ -142,8 +153,25 @@ Available column override flags:
 
 ### Running Predixcan
 STEP 7 — RUN S-PREDIXCAN ON HARMONIZED OUTPUT
+To run predixcan you must navigate to the software folder in the folder Metaxcan
+
+```bash
+cd Metaxcan/software
+```
+Activate the conda environment to run Predixcan in:
+
+```bash
+conda activate imlabtools
+```
+
+if conda is not installed, run:
+
+```bash
+conda env create -f /path/to/this/repo/software/conda_env.yaml
+```
 
 After harmonization, run S-PrediXcan using the standardized column names that the harmonization script will always output:
+
 ```bash
     python3 ~/Final_Project/MetaXcan/software/SPrediXcan.py \
         --model_db_path /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.db \
@@ -174,7 +202,6 @@ Example using the GWAS Catalog file:
         --pvalue_column pvalue \
         --output_file ~/Final_Project/sample_outputs/spredixcan_results.csv
 ```
-
 
 To access your results:
 ```bash
