@@ -1,23 +1,12 @@
-"""
-Usage:
-    #Auto-detect column names
-    python3 run_gwas_harmonization.py \
-        -i my_gwas_file.tsv.gz \
-        -o my_harmonized_output.txt.gz
+#Usage:
+#   python3 run_gwas_harmonization.py -i my_gwas_file.tsv.gz -o my_harmonized_output.txt.gz
+#   python3 run_gwas_harmonization.py -i my_gwas_file.tsv.gz -o my_harmonized_output.txt.gz --snp_col SNP --pvalue_col P
  
-    # Manually override specific columns if auto-detection fails
-    python3 run_gwas_harmonization.py \
-        -i my_gwas_file.tsv.gz \
-        -o my_harmonized_output.txt.gz \
-        --snp_col SNP \
-        --pvalue_col P
-"""
- 
-import sys #for reading command line arguments and exiting
-import argparse #for parsing command line arguments
-import subprocess #for running gwas_parsing.py as a subprocess
-import os #for file path handling
-import gzip #for reading gzipped input files
+import sys 
+import argparse 
+import subprocess 
+import os 
+import gzip 
  
 #path to gwas_parsing.py from the summary-gwas-imputation repo
 GWAS_PARSING_SCRIPT = os.path.expanduser(
@@ -29,15 +18,15 @@ GWAS_PARSING_SCRIPT = os.path.expanduser(
 #used to auto-detect column names from any GWAS file header
 COLUMN_ALIASES = {
     "snp_col": [ #all known names for the SNP/variant ID column
-        "rsid", "SNP", "snp", "variant_id", "ID", "SNPID", "MarkerName",
+        "rsid", "RSID", "SNP", "snp", "variant_id", "ID", "SNPID", "MarkerName",
         "rs_id", "variant", "RSID", "snpID", "SNP_ID", "snp_id"
     ],
     "effect_allele_col": [ #all known names for the effect allele column
-        "effect_allele", "A1", "ALT", "alt", "EA", "Allele1", "ALLELE1",
+        "effect_allele", "EFFECT_ALLELE", "A1", "ALT", "alt", "EA", "Allele1", "ALLELE1",
         "EffectAllele", "effect_allele_1", "Risk_Allele"
     ],
     "other_allele_col": [ #all known names for the non-effect allele column
-        "other_allele", "A2", "REF", "ref", "NEA", "Allele2", "ALLELE2",
+        "other_allele", "OTHER_ALLELE", "A2", "REF", "ref", "NEA", "Allele2", "ALLELE2",
         "OtherAllele", "non_effect_allele", "other_allele_2"
     ],
     "beta_col": [ #all known names for the beta/effect size column
@@ -53,7 +42,7 @@ COLUMN_ALIASES = {
         "p.value", "P_value", "P-value", "LOG10P"
     ],
     "freq_col": [ #all known names for the allele frequency column
-        "effect_allele_frequency", "AF_Allele2", "EAF", "Freq1", "FRQ",
+        "effect_allele_frequency", "frequency", "EFFECT_ALLELE_FREQ", "AF_Allele2", "EAF", "Freq1", "FRQ",
         "MAF", "freq", "A1FREQ", "effect_allele_freq", "AF", "FREQ"
     ],
     "chr_col": [ #all known names for the chromosome column
@@ -108,6 +97,7 @@ parser.add_argument("--freq_col",          default=None, help="Allele frequency 
 parser.add_argument("--chr_col",           default=None, help="Chromosome column name (auto-detected if not set)")
 parser.add_argument("--pos_col",           default=None, help="Base pair position column name (auto-detected if not set)")
 parser.add_argument("--separator",         default="\t", help="Column separator (default: tab)")
+parser.add_argument("--reference_panel",   default=None, help="Path to 1000G variant_metadata.txt.gz (needed for coordinate-based IDs like All of Us)")
  
 arguments = parser.parse_args(sys.argv[1:]) #parse arguments from command line
 infile  = arguments.input #store input file path
@@ -213,6 +203,17 @@ if final_cols["chr_col"]: #add chromosome mapping if column exists
 if final_cols["pos_col"]: #add position mapping if column exists
     cmd += ["-output_column_map", final_cols["pos_col"], "position"]
  
+#add reference panel arguments if provided (needed for coordinate-based variant IDs like All of Us)
+if arguments.reference_panel: #only add if user passed --reference_panel
+    ref_panel = os.path.expanduser(arguments.reference_panel) #expand ~ in reference panel path
+    cmd += ["-snp_reference_metadata", ref_panel, "METADATA"] #tell gwas_parsing.py to use the reference panel
+    cmd += ["--insert_value", "n_cases", "NA"] #insert NA for missing n_cases column (required by output_order)
+    cmd += ["-output_order", #specify output column order when using reference panel
+            "variant_id", "panel_variant_id", "chromosome", "position",
+            "effect_allele", "non_effect_allele", "frequency",
+            "pvalue", "zscore", "effect_size", "standard_error",
+            "sample_size", "n_cases"] #panel_variant_id is needed for S-PrediXcan with MASHR models
+ 
 #run gwas_parsing.py
 print("Running gwas_parsing.py...")
 result = subprocess.run(cmd) #execute the command and wait for it to finish
@@ -227,4 +228,3 @@ else: #if command failed
     print()
     print("ERROR: gwas_parsing.py failed. Check the output above for details.")
     sys.exit(1) #exit with error code
- 

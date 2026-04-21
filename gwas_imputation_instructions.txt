@@ -1,44 +1,44 @@
-GWAS Harmonization Pipeline Instructions
-
 STEP 1 — DOWNLOAD summary-gwas-imputation
 
-Cloned the repo into my Final_Project directory:
+Clone the repo into your Final_Project directory:
 
-cd ~/Final_Project
-git clone https://github.com/hakyimlab/summary-gwas-imputation.git
+    cd ~/Final_Project
+    git clone https://github.com/hakyimlab/summary-gwas-imputation.git
 
 Verify it downloaded correctly:
 
-ls ~/Final_Project/summary-gwas-imputation/src/
+    ls ~/Final_Project/summary-gwas-imputation/src/
 
-gwas_parsing.py is in the output.
+You should see gwas_parsing.py in the output.
 
 
 STEP 2 — DOWNLOAD MetaXcan (S-PrediXcan)
 
-Clone the MetaXcan repo into my Final_Project directory:
+Clone the MetaXcan repo into your Final_Project directory:
 
-cd ~/Final_Project
-git clone https://github.com/hakyimlab/MetaXcan.git
+    cd ~/Final_Project
+    git clone https://github.com/hakyimlab/MetaXcan.git
 
 Verify SPrediXcan.py is there:
 
-ls ~/Final_Project/MetaXcan/software/SPrediXcan.py
+    ls ~/Final_Project/MetaXcan/software/SPrediXcan.py
 
 
 STEP 3 — INSTALL DEPENDENCIES
 
 Check that numpy, pandas, and scipy are available:
 
-python3 -c "import numpy, pandas, scipy; print('OK')"
+    python3 -c "import numpy, pandas, scipy; print('OK')"
 
-Install pyliftover which is required by gwas_parsing.py:
+Install pyliftover (required by gwas_parsing.py):
 
-pip install pyliftover --break-system-packages
+    pip install pyliftover --break-system-packages
 
 Check that genomic_tools_lib is accessible:
 
-python3 -c "import sys; sys.path.insert(0, '/home/mabdulmuiz/Final_Project/summary-gwas-imputation/src'); import genomic_tools_lib; print('OK')"
+    python3 -c "import sys; sys.path.insert(0, '/home/<your_username>/Final_Project/summary-gwas-imputation/src'); import genomic_tools_lib; print('OK')"
+
+Replace <your_username> with your actual username.
 
 
 STEP 4 — PATCH gwas_parsing.py
@@ -46,16 +46,16 @@ STEP 4 — PATCH gwas_parsing.py
 There is a bug in gwas_parsing.py that causes a crash when the
 input file does not have a sample_size column. Apply this fix:
 
-sed -i 's/\[int(x) if not math.isnan(x) else "NA" for x in d.sample_size\]/[int(x) if (not isinstance(x, str) and not math.isnan(x)) else "NA" for x in d.sample_size]/' ~/Final_Project/summary-gwas-imputation/src/gwas_parsing.py
+    sed -i 's/\[int(x) if not math.isnan(x) else "NA" for x in d.sample_size\]/[int(x) if (not isinstance(x, str) and not math.isnan(x)) else "NA" for x in d.sample_size]/' ~/Final_Project/summary-gwas-imputation/src/gwas_parsing.py
 
 This only needs to be done once after cloning the repo.
 
 
-STEP 5 — HARMONIZATION SCRIPT
+STEP 5 — PLACE THE HARMONIZATION SCRIPT
 
-Copy run_gwas_harmonization.py into my Final_Project directory:
+Copy run_gwas_harmonization.py into your Final_Project directory:
 
-cp run_gwas_harmonization.py ~/Final_Project/
+    cp run_gwas_harmonization.py ~/Final_Project/
 
 Open the script and update the GWAS_PARSING_SCRIPT path at the top
 if your directory structure is different:
@@ -67,10 +67,10 @@ if your directory structure is different:
 
 STEP 6 — RUN THE HARMONIZATION SCRIPT
 
-The script automatically detects column names from the input file.
-We do not need to specify column names for most standard GWAS files.
+The script automatically detects column names from your input file.
+You do not need to specify column names for most standard GWAS files.
 
-Basic usage:
+Basic usage (auto-detect columns):
 
     python3 run_gwas_harmonization.py \
         -i /path/to/your_gwas_file.tsv.gz \
@@ -82,7 +82,7 @@ Example using the GWAS Catalog file:
         -i ~/Final_Project/data/GCST90568441.tsv.gz \
         -o ~/Final_Project/sample_outputs/GCST90568441_harmonized.txt.gz
 
-If auto-detection fails for any column, we can override manually (example):
+If auto-detection fails for any column, you can override manually:
 
     python3 run_gwas_harmonization.py \
         -i ~/Final_Project/data/my_gwas.tsv.gz \
@@ -102,8 +102,65 @@ Available column override flags:
     --chr_col           Chromosome column
     --pos_col           Base pair position column
 
+NOTE: If the output file already exists, gwas_parsing.py will skip
+processing. Delete the output file first if you want to re-run:
 
-STEP 7 — RUN S-PREDIXCAN ON HARMONIZED OUTPUT
+    rm /path/to/your_harmonized_output.txt.gz
+
+
+STEP 7 — USING A REFERENCE PANEL FOR COORDINATE-BASED VARIANT IDs
+
+Some GWAS files (e.g., All of Us) use coordinate-based variant IDs
+(e.g., chr1:61920:G:A) instead of rsIDs. S-PrediXcan cannot match
+these against its model unless you provide a reference panel.
+
+Download the 1000 Genomes reference panel:
+
+    cd ~/Final_Project
+    wget https://zenodo.org/record/6334509/files/sample_data.tar
+    tar -xf sample_data.tar
+
+The file you need is:
+
+    ~/Final_Project/sample_data/1000G_hg38/variant_metadata.txt.gz
+
+Run harmonization with the reference panel:
+
+    python3 run_gwas_harmonization.py \
+        -i /path/to/your_aou_gwas.tsv.gz \
+        -o /path/to/your_harmonized_output.txt.gz \
+        --reference_panel ~/Final_Project/sample_data/1000G_hg38/variant_metadata.txt.gz
+
+Then run S-PrediXcan using MASHR models (not elastic net) with these
+additional flags:
+
+    --keep_non_rsid \
+    --model_db_snp_key varID \
+    --snp_column panel_variant_id \
+
+Example full command:
+
+    python3 ~/Final_Project/MetaXcan/software/SPrediXcan.py \
+        --model_db_path /home/data/Project3/mashr/mashr_Whole_Blood.db \
+        --covariance /home/data/Project3/mashr/mashr_Whole_Blood.txt.gz \
+        --gwas_folder ~/Final_Project/sample_outputs \
+        --gwas_file_pattern "your_harmonized_output.txt.gz" \
+        --snp_column panel_variant_id \
+        --effect_allele_column effect_allele \
+        --non_effect_allele_column non_effect_allele \
+        --beta_column effect_size \
+        --se_column standard_error \
+        --pvalue_column pvalue \
+        --keep_non_rsid \
+        --model_db_snp_key varID \
+        --output_file ~/Final_Project/sample_outputs/spredixcan_aou_results.csv
+
+NOTE: Files with rsIDs (GWAS Catalog, GIANT, etc.) do NOT need
+--reference_panel and should use the elastic net models with
+--snp_column variant_id (no --keep_non_rsid or --model_db_snp_key).
+
+
+STEP 8 — RUN S-PREDIXCAN ON HARMONIZED OUTPUT (rsID files)
 
 After harmonization, run S-PrediXcan using the standardized column
 names that the harmonization script always outputs:
