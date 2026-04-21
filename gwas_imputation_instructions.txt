@@ -161,7 +161,7 @@ NOTE: Files with rsIDs (GWAS Catalog, GIANT, etc.) do NOT need
 
 
 STEP 8 — RUN S-PREDIXCAN ON HARMONIZED OUTPUT (rsID files)
-------------------------------------------------------------
+
 After harmonization, run S-PrediXcan using the standardized column
 names that the harmonization script always outputs:
 
