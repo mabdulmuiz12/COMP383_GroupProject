@@ -4,7 +4,37 @@ Project 3 - Harmonize GWAS Summary Statistics for S-PrediXcan
 ## Project Overview
 The purpose of this project was to Evaluate different GWAS Harmonization tools, and determined the best one to use. With that determined tool, we created a snakefile pipeline for users to implement if they did not want to do as much coding. 
 
-For more information about the Introduction, Dataset, and project workflow please look at the Wiki page.
+Move data from class server into our current folder:
+
+cp /home/data/Project3/AoU_AFR_phenotype_836850_ACAF_sumstats_for_S-PrediXcan.txt.gz .
+
+Downloading GWAS Inspector:
+
+R
+
+install.packages("GWASinspector")
+
+Getting template configuration file format for GWAS Inspector:
+
+get_config(".")
+Make changes to this file to run GWAS Inspector
+
+outputs config.ini
+
+Run demo:
+
+#Runs a demo and outputs it in sample_outputs directory
+demo_inspector("sample_outputs")
+
+Output:
+GWASinspector_demo folder in sample_outputs
+
+Ran a test QC using demo_inspector()
+Output files were saved in the specified directory (sample_outputs)
+Reviewed generated outputs including:
+	QC report (Excel file)
+	plots (QQ plot, Manhattan plot, etc.)
+    log and summary files
 
 
 ## Dependencies Used
@@ -30,10 +60,13 @@ For more information about the Introduction, Dataset, and project workflow pleas
 	- 
 	- 
 
-## Set up Instructions 
+dir_data = /home/user/documents/input
+to 
+dir_data = /home/mabdulmuiz/Final_Project/data/sample_class_gwas
 
-Create a folder and name it Finalproject 
-move into that folder 
+dir_output = /home/user/documents/output
+to 
+dir_output = /home/mabdulmuiz/Final_Project/sample_outputs
 
 cloned this repo
 ```bash
@@ -55,9 +88,14 @@ wget http://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90568001-GCS
 Or you can also use the All of Us GWAS found in the class server. 
 Path for All of us: /home/data/Project3/
 
+Added these lines to the end of alt_headers.txt:
 
+EFFECT_ALL	ALT
+OTHER_ALL	REF
+MARKER	ID
 
-## Instructions 
+write file fix_header.py to fix the header in class data
+I feel like i didnt need to do this there should be a way to change it in alt_headers.txt
 
 STEP 1
 Cloned the Metaxcan harmonization tool lab repo into my Final_Project directory:
@@ -242,3 +280,5 @@ To access your results:
 cat /Final_Project/sample_outputs/spredixcan_results.csv
 ```
 
+inspector <- setup_inspector("config.ini")
+run_inspector(inspector)
