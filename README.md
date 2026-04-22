@@ -20,10 +20,14 @@ For more information about the Introduction, Dataset, and project workflow pleas
 	
 ### external tools 
 	- summary-gwas-imputation
+	- All of us 
 	- GWAS Catalog datasets
+	- Pan-UK BioBank
 
 ### Description of scripts 
 	- S-Predixcan
+	- munge_stats.r
+	- 
 	- 
 
 ## Set up Instructions 
@@ -211,6 +215,8 @@ After harmonization, run S-PrediXcan using the standardized column names that th
         --beta_column effect_size \
         --se_column standard_error \
         --pvalue_column pvalue \
+        --pvalue_column pvalue \
+        --keep_non_rsid \
         --output_file /path/to/results/spredixcan_results.csv
 ```
 Example using the GWAS Catalog file:
@@ -227,6 +233,8 @@ Example using the GWAS Catalog file:
         --beta_column effect_size \
         --se_column standard_error \
         --pvalue_column pvalue \
+        --keep_non_rsid \
+        --model_db_snp_key varID \ 
         --output_file ~/Final_Project/sample_outputs/spredixcan_results.csv
 ```
 
