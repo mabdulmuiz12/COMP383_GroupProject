@@ -3,7 +3,7 @@ import os
 from snakemake.io import glob_wildcards
 
 # 1. Path to your raw GWAS files
-INPUT_DIR = "/home/csebastian/Final_Project/data" 
+INPUT_DIR = "/path/to/file" 
 
 # 2. Path where you want harmonized results to go
 OUTPUT_DIR = "sample_outputs"
@@ -19,9 +19,6 @@ configfile: "config.yaml"
 SAMPLES, = glob_wildcards(os.path.join(INPUT_DIR, "{sample}.tsv.gz"))
 
 rule all:
-    """
-    The target rule. List everything you want to exist at the end.
-    """
     input:
         ".patched",
         expand(os.path.join(OUTPUT_DIR, "{sample}_harmonized.txt.gz"), sample=SAMPLES)
