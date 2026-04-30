@@ -1,4 +1,4 @@
-```bash
+
 #GWASLab Pipeline
 
 ##Overview This section describes how to download the required data, set up the virtual environment, and run GWASLab in order to harmonizae GWAS summary statistics for downstream analysis with S-PrediXcan
@@ -67,4 +67,4 @@ mysumstats.harmonize(
 
 #create a new file with the harmonized data
 mysumstats.to_csv("harmonized_sumstats.tsv", sep="\t", index=False)
-```
+
