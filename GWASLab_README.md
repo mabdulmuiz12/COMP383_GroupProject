@@ -25,7 +25,7 @@ gunzip GCF_000001405.40_GRCh38.p14_genomic.fna.gz
 
 #Next, a virtual environment was then used within the terminal to run GWASLab within the class server and was named .venv
 
-pytho3 -m venv .venv
+python3 -m venv .venv
 
 source .venv/bin/activate
 
@@ -39,7 +39,6 @@ wget http://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/GCST90568001-GCS
 #unzip the statistic file
 
 gunzip GCST90568441.tsv.gz
-
 ##GWASLab harmonization script
 
 The following script is used for GWASLab summary statistics, which is used to do quality control and overall produce harmonized data with the GRCh38 reference genome
@@ -61,6 +60,7 @@ mysumstats = gl.Sumstats(
     p="p_value",
     sep=r"\s+"
 )
+
 #these column names will vary depending on the summary statistic, in which users must change manually
 
 #basic quality control checks
@@ -74,4 +74,3 @@ mysumstats.harmonize(
 
 #create a new file with the harmonized data
 mysumstats.to_csv("harmonized_sumstats.tsv", sep="\t", index=False)
-
