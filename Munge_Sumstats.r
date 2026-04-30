@@ -1,5 +1,6 @@
 if (!require("BiocManager")) install.packages("BiocManager")
 
+#isntalls MungeSumstats package thorugh BioConductor
 BiocManager::install("MungeSumstats")
 
 # ^^ if downloaded then you do not need to run the above, only run the below
@@ -19,7 +20,7 @@ library(BSgenome.Hsapiens.NCBI.GRCh38)
 # these are big downloads of 800kb
 
 
-# required inputs to run Munge sumstats are path, ref_genome, and save_path)
+# required inputs to run Munge sumstats are path, ref_genome, and save_path
 
 format_sumstats(path="/home/data/Project3/AoU_AFR_phenotype_836850_ACAF_sumstats_for_S-PrediXcan.txt.gz", 
 ref_genome="GRCh38", save_path = "/home/csebastian/COMP383_GroupProject/harmonized_summary_stats/AoU_formatted1.txt.gz")
