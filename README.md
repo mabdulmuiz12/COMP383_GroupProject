@@ -161,6 +161,29 @@ Available column override flags:
     --chr_col           Chromosome column
     --pos_col           Base pair position column
 ```
+### Using a Reference Panel for Coordinate-based Variant IDs
+STEP 6
+Some GWAS files (e.g., All of Us) use coordinate-based variant IDs (e.g., chr1:61920:G:A) instead of rsIDs. S-PrediXcan cannot match these against its model unless you provide a reference panel.
+
+Download the 1000 Genomes reference panel:
+```bash 
+cd ~/Final_Project
+wget -0 sample_data. tar "https://zenodo.org/record/3657902/files/sample_data.tar?download=1"
+tar -xf sample_data.tar
+```
+The file you need is:
+```bash
+~/COMP383_GroupProject/sample_data/1000G_hg38/variant_metadata.txt.gz
+```
+
+Run harmonization with the reference panel:
+```bash
+python3 run_gwas_harmonization.py \
+-i /path/to/your_aou_gwas.tsv.gz \
+-0 / path/to/your_harmonized
+_output. txt.gz
+--reference_panel ~/COMP_383GroupProject/sample_data/1000G_hg38/variant_metadata.txt.gz
+```
 
 ### Running Predixcan on Hamronized Output
 STEP 7 
