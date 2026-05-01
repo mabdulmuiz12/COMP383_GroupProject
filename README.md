@@ -112,31 +112,12 @@ sed -i 's/\[int(x) if not math.isnan(x) else "NA" for x in d.sample_size\]/[int(
 This only needs to be done once after cloning the repo.
 
 
-### STEP 5 — Updating GWAS_PARSING_SCRIPT
-
-Open the script and update the GWAS_PARSING_SCRIPT path at the top
-if your directory structure is different:
-
-```python
-    GWAS_PARSING_SCRIPT = os.path.expanduser(
-        "~/COMP383_GroupProject/summary-gwas-imputation/src/gwas_parsing.py"
-    )
-```
-
 
 ### Running harmonization tool
 STEP 6 — RUN THE HARMONIZATION SCRIPT
-THere are two ways to run harmonization too:
-#### 1. Using the Snakefile
 
-On the command line run:
-```bash
-snakemake --cores 4 --config input_dir="/path/to/new_lab_data"
-```
+Run the code on the command line 
 
-#### 2. Run the code on the command line 
-
-    
 The script automatically detects column names from the input file.
 We do not need to specify column names for most standard GWAS files.
 
@@ -146,7 +127,7 @@ python3 run_gwas_harmonization.py \
         -i /path/to/your_gwas_file.tsv.gz \
         -o /path/to/your_harmonized_output.txt.gz
 ```
-To use with the GWAS form the calss server:
+To use with the GWAS form the class server:
 
 ```bash
     python3 run_gwas_harmonization.py \
