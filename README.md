@@ -182,7 +182,7 @@ After running MetaXcan and harmonizaing data, run S-PrediXcan using the standard
 To run harmonized GWAS on S-Predixcan:
 
 ```bash
-    python3 ~/Final_Project/MetaXcan/software/SPrediXcan.py \
+    python3 ~/COMP383_GroupProject/MetaXcan/software/SPrediXcan.py \
         --model_db_path /home/data/model_used.db \
         --covariance /home/data/model_used..txt.gz \
         --gwas_folder /path/to/harmonized/output/folder \
@@ -201,7 +201,7 @@ To run harmonized GWAS on S-Predixcan:
 Example with harmonizaed All of Us from class server:
 
 ```bash
-    python3 ~/Final_Project/MetaXcan/software/SPrediXcan.py \
+    python3 ~/COMP383_GroupProject/MetaXcan/software/SPrediXcan.py \
         --model_db_path /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.db \
         --covariance /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.txt.gz \
         --gwas_folder ~/COMP383_GroupProject \
@@ -221,7 +221,7 @@ Example with harmonizaed All of Us from class server:
 Example using the ADHD-GWAS Catalog file:
 
 ```bash
-    python3 ~/Final_Project/MetaXcan/software/SPrediXcan.py \
+    python3 ~/COMP383_GroupProject/MetaXcan/software/SPrediXcan.py \
         --model_db_path /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.db \
         --covariance /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.txt.gz \
         --gwas_folder ~/COMP383_GroupProject \
