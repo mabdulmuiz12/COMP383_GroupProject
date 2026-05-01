@@ -2,7 +2,7 @@
 Project 3 - Harmonize GWAS Summary Statistics for S-PrediXcan
 
 ## Project Overview
-The purpose of this project was to Evaluate different GWAS Harmonization tools, and determined the best one to use. Through the evaluation of the three harmonization tools, seen in Tool_Comparision.md, we determined that MetaXcan was the most efficient tool to use. Below contains instructions to install and run Metaxcan. We have also included instructions to run harmonized data on S-PrediXcan.
+The purpose of this project was to evaluate different GWAS Harmonization tools, MungeSumstats, GWASLab, and Metaxcan, and determined the best one to use. Through the evaluation of the three harmonization tools, seen in Tool_Comparision.md, we determined that MetaXcan was the most efficient tool to use. Below contains instructions to install and run Metaxcan. We have also included instructions to run harmonized data on S-PrediXcan. Code used to run the other harmonization tools is avaible in Munge_Sumstats.R and GWASLAB_Project3_test.py
 
 ## Dependencies Used
 ### Softwares
