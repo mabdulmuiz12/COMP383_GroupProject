@@ -179,7 +179,7 @@ conda env create -f /path/to/this/repo/software/conda_env.yaml
 
 After running MetaXcan and harmonizaing data, run S-PrediXcan using the standardized column names that the harmonization script will always output:
 
-To run harmonized GWAS on S-Predixcan:
+To run your own harmonized GWAS on S-Predixcan:
 
 ```bash
     python3 ~/COMP383_GroupProject/MetaXcan/software/SPrediXcan.py \
@@ -198,7 +198,7 @@ To run harmonized GWAS on S-Predixcan:
         --output_file /path/to/results/spredixcan_results.csv
 ```
 
-Example with harmonizaed All of Us from class server:
+Example with harmonized All of Us from class server:
 
 ```bash
     python3 ~/COMP383_GroupProject/MetaXcan/software/SPrediXcan.py \
@@ -218,7 +218,7 @@ Example with harmonizaed All of Us from class server:
 ```
 
 
-Example using the ADHD-GWAS Catalog file:
+Example using the harmonized ADHD-GWAS Catalog file:
 
 ```bash
     python3 ~/COMP383_GroupProject/MetaXcan/software/SPrediXcan.py \
