@@ -1,0 +1,15 @@
+# Global directory settings
+input_dir: "data/raw"
+output_dir: "data/harmonized"
+
+# Specific overrides for different GWAS datasets
+# Use the filename (without .tsv.gz) as the key
+overrides:
+  UK_Biobank_Height:
+    snp_col: "variant_id"
+    beta_col: "b"
+    se_col: "standard_error"
+  Bentley_Lab_Data:
+    snp_col: "rsid"
+    beta_col: "effect"
+    se_col: "se"
