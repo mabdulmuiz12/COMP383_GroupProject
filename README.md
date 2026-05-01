@@ -127,7 +127,7 @@ To use with the GWAS from the class server:
 ```bash
     python3 run_gwas_harmonization.py \
         -i /home/data/Project3/AoU_AFR_phenotype_836850_ACAF_sumstats_for_S-PrediXcan.txt.gz \
-        -o ~/COMP383_GrouProject/AoU_harmonized.txt.gz
+        -o ~/COMP383_GroupProject/AoU_harmonized.txt.gz
 ```
 
 Example using the GWAS Catalog file on this repo:
@@ -141,8 +141,8 @@ Example using the GWAS Catalog file on this repo:
 If auto-detection fails for any column, we can override manually (example):
 ```bash
     python3 run_gwas_harmonization.py \
-        -i ~/Final_Project/data/my_gwas.tsv.gz \
-        -o ~/Final_Project/sample_outputs/my_harmonized.txt.gz \
+        -i ~/COMP383_GroupProject/my_gwas.tsv.gz \
+        -o ~/COMP383_GroupProject/my_harmonized.txt.gz \
         --snp_col SNP \
         --pvalue_col P \
         --beta_col BETA
@@ -204,7 +204,7 @@ Example with harmonizaed All of Us from class server:
     python3 ~/Final_Project/MetaXcan/software/SPrediXcan.py \
         --model_db_path /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.db \
         --covariance /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.txt.gz \
-        --gwas_folder ~/COMP383_GrouProject/AoU_harmonized.txt.gz \
+        --gwas_folder ~/COMP383_GroupProject \
         --gwas_file_pattern "AoU_harmonized.txt.gz" \
         --snp_column variant_id \
         --effect_allele_column effect_allele \
@@ -214,7 +214,7 @@ Example with harmonizaed All of Us from class server:
         --pvalue_column pvalue \
         --pvalue_column pvalue \
         --keep_non_rsid \
-        --output_file ~/COMP383_GrouProject/spredixcan_results_AoU.csv
+        --output_file ~/COMP383_GroupProject/spredixcan_results_AoU.csv
 ```
 
 
@@ -224,7 +224,7 @@ Example using the ADHD-GWAS Catalog file:
     python3 ~/Final_Project/MetaXcan/software/SPrediXcan.py \
         --model_db_path /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.db \
         --covariance /home/data/Project3/elastic-net-with-phi/en_Whole_Blood.txt.gz \
-        --gwas_folder ~/Final_Project/sample_outputs \
+        --gwas_folder ~/COMP383_GroupProject \
         --gwas_file_pattern "GCST90568441_harmonized.txt.gz" \
         --snp_column variant_id \
         --effect_allele_column effect_allele \
@@ -234,10 +234,10 @@ Example using the ADHD-GWAS Catalog file:
         --pvalue_column pvalue \
         --keep_non_rsid \
         --model_db_snp_key varID \ 
-        --output_file ~/Final_Project/sample_outputs/spredixcan_results_GCST90568441.csv
+        --output_file ~/COMP383_GroupProject/spredixcan_results_GCST90568441.csv
 ```
 
 To view the first 10 lines of your S-PrediXcan results:
 ```bash
-cat ~/COMP383_GrouProject/spredixcan_results_AoU.csv | head -10
+cat ~/COMP383_GroupProject/spredixcan_results_AoU.csv | head -10
 ```
