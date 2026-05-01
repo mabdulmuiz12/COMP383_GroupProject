@@ -39,7 +39,7 @@ Or you can also use the All of Us GWAS found in the class server.
 Path for All of us: /home/data/Project3/AoU_AFR_phenotype_836850_ACAF_sumstats_for_S-PrediXcan.txt.gz
 
 ## Instructions
-###
+
 STEP 1
 Cloned the Metaxcan harmonization tool lab repo under this directory:
 ```bash
@@ -54,7 +54,7 @@ gwas_parsing.py is in the output.
 
 
 ### Installing Metaxcan (S-Predixcan)
-STEP 2 — DOWNLOAD MetaXcan (S-PrediXcan)
+STEP 2 
 
 Clone the MetaXcan repo into my Final_Project directory:
 ```bash
@@ -70,7 +70,7 @@ ls ~/Final_Project/MetaXcan/software/SPrediXcan.py
 For more information/instructions on downloading Metaxcan, go to the Metaxcan Lab GitHub: https://github.com/hakyimlab/MetaXcan/blob/master/README.md 
 
 ### Installing Dependencies 
-STEP 3 — INSTALL DEPENDENCIES
+STEP 3 
 
 Check that numpy, pandas, and scipy are available:
 Run on the command line:
@@ -95,7 +95,8 @@ Check that genomic_tools_lib is accessible:
 python3 -c "import sys; sys.path.insert(0, '~/COMP383_GroupProject/summary-gwas-imputation/src'); import genomic_tools_lib; print('OK')"
 ```
 
-### STEP 4 — PATCH gwas_parsing.py
+### PATCH gwas_parsing.py
+STEP 4 
 
 There is a bug in gwas_parsing.py that causes a crash when the input file does not have a sample_size column. Apply this fix on the command line:
 
@@ -106,8 +107,8 @@ This only needs to be done once after cloning the repo.
 
 
 
-### Running harmonization tool
-STEP 5 — RUN THE HARMONIZATION SCRIPT
+### Running Harmonization Script
+STEP 5 
 
 Run the code on the command line 
 
@@ -161,8 +162,8 @@ Available column override flags:
     --pos_col           Base pair position column
 ```
 
-### Running Predixcan
-STEP 7 — RUN S-PREDIXCAN ON HARMONIZED OUTPUT
+### Running Predixcan on Hamronized Output
+STEP 7 
 To run S-Predixcan you must navigate to the software folder in the folder Metaxcan
 
 Activate the conda environment to run Predixcan in:
